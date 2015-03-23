@@ -87,12 +87,12 @@ function Load_func()
 		if not me or me.classId ~= CDOTA_Unit_Hero_Brewmaster then 
 			script:Disable()
 		else
+		    registered = true
 		    print("HippyFizz Brewmaster MOD Loaded")
 			info.visible = true
 			script:RegisterEvent(EVENT_TICK,Tick_func)
 			script:RegisterEvent(EVENT_KEY,key)
 			script:UnregisterEvent(Load_func)
-			registered = true
 		end
 	end
 end
@@ -114,20 +114,12 @@ function Close_func()
 	    button_message_5.visible = false
 	    text.visible = false
 	    info.visible = false
-		for i=1,5 do
-		    main.rec[i].visible = false
-			main.draw[i].visible = false
-			main.cyclone[i].visible = false
-			main.boulder[i].visible = false
-			selected.cyclone_status[i].visible = false
-			selected.boulder_status[i].visible = false
-			selected.icon[i].visible = false
-		end
 		main = {}
 		selected = {}
-	    script:UnregisterEvent(Tick_func)
+	    script:UnregisterEvent(Tick)
 	    script:UnregisterEvent(key)
 	    script:RegisterEvent(EVENT_TICK,Load_func)
+		registered = false
 	end
 end
 
