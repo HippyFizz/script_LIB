@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 --<<HippyFizz Brewmaster MOD Beta version 1.0.1>> 
+=======
+--<<HippyFizz Brewmaster MOD Beta>> 
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 require("libs.Utils")
 require("libs.TargetFind")
 require("libs.ScriptConfig")
@@ -13,8 +17,11 @@ config:SetParameter("ComboKey", "V", config.TYPE_HOTKEY)
 config:SetParameter("HideNotes", "H", config.TYPE_HOTKEY)
 config:SetParameter("Text X", 5)
 config:SetParameter("Text Y", 45)
+<<<<<<< HEAD
 config:SetParameter("XX", 20)
 config:SetParameter("YY", 0)
+=======
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 config:Load()
 
 init = false
@@ -33,6 +40,7 @@ local wind_active = false
 local invis_active = false
 local cleance_active = false
 local combo_active = false
+<<<<<<< HEAD
 local info_active = false
 
 local main = {}
@@ -48,6 +56,8 @@ for i=1,5 do
 	selected.cyclone_status[i] = false
 	selected.boulder_status[i] = false
 end
+=======
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 
 Brewmaster_PrimalEarth = nil
 Brewmaster_PrimalFire = nil
@@ -57,6 +67,7 @@ thunder_clap = nil
 drunken_haze = nil
 primal_split = nil
 
+<<<<<<< HEAD
 local CM_space_texture = "NyanUI/other/CM_space"
 local CM_buttom_texture = "NyanUI/other/CM_buttom"
 
@@ -65,6 +76,8 @@ main.rec[2] = drawMgr:CreateRect(xx+320*rate,5*rate,215*rate,250*rate,0xFFFFFF30
 main.rec[3] = drawMgr:CreateRect(xx+490*rate,yy+72*rate,30*rate,30*rate,0x00000090,drawMgr:GetTextureId("NyanUI/spellicons/brewmaster_earth_hurl_boulder")) main.rec[3].visible = false
 main.rec[4] = drawMgr:CreateRect(xx+450*rate,yy+72*rate,30*rate,30*rate,0xFFFFFF30,drawMgr:GetTextureId("NyanUI/spellicons/brewmaster_storm_cyclone")) main.rec[4].visible = false
 
+=======
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 local x,y = config:GetParameter("Text X"), config:GetParameter("Text Y")
 local TitleFont = drawMgr:CreateFont("Title","Segoe UI",18,580) 
 local ControlFont = drawMgr:CreateFont("Title","Segoe UI",14,500)
@@ -79,7 +92,10 @@ local status = drawMgr:CreateText(x,y+100,0x2CFA02FF,"Script Status : Ready!",Co
 local invis_status = drawMgr:CreateText(x,y+120,0xED5153FF,"WindWalk Status: Disable",ControlFont) invis_status.visible = false
 local manawarning = drawMgr:CreateText(x,y+140,0xED5153FF,"",ControlFont) manawarning.visible = false
 
+<<<<<<< HEAD
 local activated = false
+=======
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 
 function Load_func()
 	if PlayingGame() then
@@ -89,15 +105,25 @@ function Load_func()
 		else
 		    print("HippyFizz Brewmaster MOD Loaded")
 			info.visible = true
+<<<<<<< HEAD
 			script:RegisterEvent(EVENT_TICK,Tick_func)
 			script:RegisterEvent(EVENT_KEY,key)
 			script:UnregisterEvent(Load_func)
 			registered = true
+=======
+			if combo_key == 32 then 
+			    combo_message.text = "HOLD Space to combo on target nearest to mouse"
+			end
+			script:RegisterEvent(EVENT_TICK,Tick_func)
+			script:RegisterEvent(EVENT_KEY,key)
+			script:UnregisterEvent(Load_func)
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 		end
 	end
 end
 
 function Close_func()
+<<<<<<< HEAD
     collectgarbage("collect")
     if registered then
 	    init = false
@@ -171,6 +197,42 @@ function key(msg, code)
 		button_message_5.visible = not button_message_5.visible
 	end
 	
+=======
+	init = false
+	thunder_clap = nil
+	drunken_haze = nil
+	primal_split = nil
+	status.visible = false
+	invis_status.visible = false
+	manawarning.visible = false
+	button_message_1.visible = false
+	button_message_2.visible = false
+	button_message_3.visible = false
+	button_message_4.visible = false
+	button_message_5.visible = false
+	text.visible = false
+	info.visible = false
+	script:UnregisterEvent(Tick)
+	script:UnregisterEvent(Key)
+	script:RegisterEvent(EVENT_TICK,Load_func)
+end
+
+function key(msg, code)
+	if client.chat or client.console or client.loading then return end
+	
+	if code == hide_hotes_key then
+		if button_message_1.visible == true then
+		else
+			info.visible = false
+			button_message_1.visible = true
+			button_message_2.visible = true
+			button_message_3.visible = true
+			button_message_4.visible = true
+			button_message_5.visible = true
+		end
+	end
+	
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 	if code == stun_key then
 		stun_active = (msg == KEY_DOWN)
 		stun_func()
@@ -212,6 +274,7 @@ end
 function Tick_func(tick)
 	local me = entityList:GetMyHero()
 	if not me then return end
+<<<<<<< HEAD
 	main.rec[1].visible = true
 	
 	local user_value = 105
@@ -280,12 +343,29 @@ function Tick_func(tick)
 	end) then end
 	
 	init_func()
+=======
+	
+	init_func()
+	
+	
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 	--[[stun_func()
 	wind_func()
 	invis_func()
 	combo_func()
 	cleane_func()]]
 	
+<<<<<<< HEAD
+=======
+	--[[if thunder_clap.cd > 0 and primal_split.cd > 0 then
+	        status.text = "Script Status : Cooling Down!"
+		status.color = 0xED5153FF
+		cooldown = true
+	elseif thunder_clap.cd == 0 and primal_split.cd == 0 then
+	        cooldown = false
+	end]]
+	
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 if pcall(function ()	
 	local check_primal_split = me:DoesHaveModifier("modifier_brewmaster_primal_split")
 	if check_primal_split then
@@ -354,8 +434,13 @@ for i,v in ipairs(enemies) do
 		me:SafeCastItem(Blink.name,bpos)	
 		end) then end		
 	    Sleep(me:GetTurnTime(v)+client.latency,"blink")
+<<<<<<< HEAD
 		me:SafeCastAbility(thunder_clap,true)
 		me:SafeCastAbility(primal_split,true)
+=======
+		me:SafeCastAbility(thunder_clap,false)
+		me:SafeCastAbility(primal_split,false)
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 		end
 	end
 end
@@ -376,6 +461,7 @@ end
 
 function stun_func()
 local me = entityList:GetMyHero()
+<<<<<<< HEAD
 local check_primal_split = me:DoesHaveModifier("modifier_brewmaster_primal_split")
 	if check_primal_split and SleepCheck("hurl_boulder") then 
 	if pcall(function ()
@@ -386,10 +472,30 @@ local check_primal_split = me:DoesHaveModifier("modifier_brewmaster_primal_split
 		end) then 
 	end
 	end
+=======
+--[[local enemies = entityList:GetEntities({type=LuaEntity.TYPE_HERO,team = me:GetEnemyTeam(),alive=true,visible=true})]]
+local check_primal_split = me:DoesHaveModifier("modifier_brewmaster_primal_split")
+--[[for i,v in ipairs(enemies) do
+	if v.visible and v.alive and v.health > 0 then
+		if GetDistance2D(me,v) < 800 then]]
+			if check_primal_split and SleepCheck("hurl_boulder") then 
+				if pcall(function ()
+				local v = targetFind:GetClosestToMouse(100)
+				local hurl_boulder = Brewmaster_PrimalEarth:GetAbility(1)
+					Brewmaster_PrimalEarth:SafeCastAbility(hurl_boulder,v,false)
+					Sleep(1000, "hurl_boulder")
+				end) then end
+				
+			--[[end
+		end
+	end]]
+end
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 end
 
 function wind_func()
 local me = entityList:GetMyHero()
+<<<<<<< HEAD
 local check_primal_split = me:DoesHaveModifier("modifier_brewmaster_primal_split")
 	if check_primal_split and SleepCheck("cyclone") then 
 	if pcall(function ()
@@ -400,6 +506,25 @@ local check_primal_split = me:DoesHaveModifier("modifier_brewmaster_primal_split
 			end) then
 	end
 	end
+=======
+--[[local enemies = entityList:GetEntities({type=LuaEntity.TYPE_HERO,team = me:GetEnemyTeam(),alive=true,visible=true})]]
+local check_primal_split = me:DoesHaveModifier("modifier_brewmaster_primal_split")
+--[[for i,v in ipairs(enemies) do]]
+	if check_primal_split and SleepCheck("cyclone") then 
+		--[[if v.visible and v.alive and v.health > 0 then
+			if GetDistance2D(me,v) < 600 and not Brewmaster_PrimalStorm:DoesHaveModifier("modifier_brewmaster_storm_wind_walk") then]]
+				local v = targetFind:GetClosestToMouse(100)
+				local cyclone = Brewmaster_PrimalStorm:GetAbility(2)
+				if pcall(function () 
+					Brewmaster_PrimalStorm:SafeCastAbility(cyclone,v,false)
+					Sleep(1000, "cyclone")
+				end) then end
+				
+			--[[end
+		end
+	end]]
+end
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 end
 
 function cleane_func()
@@ -424,6 +549,7 @@ if check_primal_split and SleepCheck("windwalk") then
 end
 end
 
+<<<<<<< HEAD
 function auto_stun(use_skill_on_him)
 	local me = entityList:GetMyHero()
 	local check_primal_split = me:DoesHaveModifier("modifier_brewmaster_primal_split")
@@ -456,5 +582,7 @@ function IsMouseOnButton(x,y,h,w)
 	return mx > x and mx <= x + w and my > y and my <= y + h
 end
 
+=======
+>>>>>>> 6cb45900cc233a5bb7fd2271376a2b854a2a54d0
 script:RegisterEvent(EVENT_TICK,Load_func)
 script:RegisterEvent(EVENT_CLOSE,Close_func)
