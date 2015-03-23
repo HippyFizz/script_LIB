@@ -74,9 +74,23 @@ function Load_func()
 end
 
 function Close_func()
-		script:UnregisterEvent(Tick)
-		script:UnregisterEvent(Key)
-		script:RegisterEvent(EVENT_TICK,Load)
+	init = false
+	thunder_clap = nil
+	drunken_haze = nil
+	primal_split = nil
+	status.visible = false
+	invis_status.visible = false
+	manawarning.visible = false
+	button_message_1.visible = false
+	button_message_2.visible = false
+	button_message_3.visible = false
+	button_message_4.visible = false
+	button_message_5.visible = false
+	text.visible = false
+	info.visible = false
+	script:UnregisterEvent(Tick)
+	script:UnregisterEvent(Key)
+	script:RegisterEvent(EVENT_TICK,Load_func)
 end
 
 function key(msg, code)
@@ -109,7 +123,7 @@ function key(msg, code)
 	end
 	
 	if code == invis_key then
-		invis_active_on = (msg == KEY_DOWN)
+		invis_active = (msg == KEY_DOWN)
 		invis_func()
 		invis_status.text = "WindWalk Status: Enable"
 		invis_status.color = 0x2CFA02FF
@@ -209,6 +223,7 @@ local Blink = me:FindItem("item_blink")
 local Range = 250
 local blink_range = 1200
 local enemies = entityList:GetEntities({type=LuaEntity.TYPE_HERO,team = me:GetEnemyTeam(),alive=true,visible=true})
+
 for i,v in ipairs(enemies) do
 	if v.visible and v.alive and v.health > 0 then
 		if SleepCheck("blink") and GetDistance2D(me,v) <= blink_range+150 and GetDistance2D(me,v) > Range then
@@ -216,7 +231,9 @@ for i,v in ipairs(enemies) do
 		if GetDistance2D(me,v) > blink_range then
 			bpos = (v.position - me.position) * 1100 / GetDistance2D(me,v) + me.position
 		end
-		me:SafeCastItem(Blink.name,bpos)		
+		if pcall(function () 
+		me:SafeCastItem(Blink.name,bpos)	
+		end) then end		
 	    Sleep(me:GetTurnTime(v)+client.latency,"blink")
 		me:SafeCastAbility(thunder_clap,false)
 		me:SafeCastAbility(primal_split,false)
