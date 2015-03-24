@@ -11,7 +11,6 @@ config:SetParameter("InvisKey", "C", config.TYPE_HOTKEY)
 config:SetParameter("CleanceKey", "B", config.TYPE_HOTKEY)
 config:SetParameter("ComboKey", "V", config.TYPE_HOTKEY)
 config:SetParameter("HideNotes", "H", config.TYPE_HOTKEY)
-config:SetParameter("UseAghanimSkills", true)
 config:SetParameter("Text X", 5)
 config:SetParameter("Text Y", 45)
 config:SetParameter("XX", 20)
@@ -28,7 +27,6 @@ local invis_key = config.InvisKey
 local cleance_key = config.CleanceKey
 local combo_key = config.ComboKey
 local hide_hotes_key = config.HideNotes
-local use_aghanim_skills = config.UseAghanimSkills
 
 local stun_active = false
 local wind_active = false
@@ -198,11 +196,6 @@ function key(msg, code)
 		blink_combo_func()
 		stun_func()
 		fire_rush()
-		local AF = scepter_find()
-		if use_aghanim_skills and AF then
-			storm_haze()
-			earth_clap()
-		end
 		status.text = "Script Status : Combo-ing!"
 		status.color = 0xED9A09FF
     end
@@ -453,44 +446,6 @@ function IsMouseOnButton(x,y,h,w)
 	local mx = client.mouseScreenPosition.x
 	local my = client.mouseScreenPosition.y
 	return mx > x and mx <= x + w and my > y and my <= y + h
-end
-
-function earth_clap()
-	local me = entityList:GetMyHero()
-	local check_primal_split = me:DoesHaveModifier("modifier_brewmaster_primal_split")
-	if check_primal_split and SleepCheck("clap") then
-	if pcall(function ()
-		local v = targetFind:GetClosestToMouse(100)
-		if GetDistance2D(me,v) < 300 then
-			local clap = Brewmaster_PrimalEarth:GetAbility(4)
-			Brewmaster_PrimalEarth:SafeCastAbility(clap,false)
-			Sleep(client.latency, "clap")
-		else return false end
-	end) then return false end
-	end
-end
-
-function storm_haze()
-	local me = entityList:GetMyHero()
-	local check_primal_split = me:DoesHaveModifier("modifier_brewmaster_primal_split")
-	if check_primal_split and SleepCheck("haze") then
-	if pcall(function ()
-		local v = targetFind:GetClosestToMouse(100)
-		local haze = Brewmaster_PrimalStorm:GetAbility(4)
-		Brewmaster_PrimalStorm:SafeCastAbility(haze,v,false)
-		Sleep(client.latency,"haze")
-	end) then return false end
-	end
-end
-
-function scepter_find()
-	local me =entityList:GetMyHero()
-	local scepter_value = me:FindItem("item_ultimate_scepter")
-	if scepter_value == nil then
-		return false
-	else 
-		return true
-	end
 end
 
 script:RegisterEvent(EVENT_TICK,Load_func)
