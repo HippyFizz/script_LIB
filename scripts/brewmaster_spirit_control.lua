@@ -1,4 +1,4 @@
---<<HippyFizz Brewmaster MOD Beta version 1.0.1>> 
+--<<HippyFizz Brewmaster MOD Beta version 1.0.2>> 
 require("libs.Utils")
 require("libs.TargetFind")
 require("libs.ScriptConfig")
