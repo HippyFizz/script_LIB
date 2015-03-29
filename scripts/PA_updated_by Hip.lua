@@ -70,12 +70,6 @@ function onLoad()
 				print("PA loaded")
 				registered = true
 				info[1].visible = true
-				info[2].visible = true
-				if auto_abyssal then
-					info[3].visible = true
-				else
-					info[3].visible = false
-				end
 				script:RegisterEvent(EVENT_TICK,Main)
 				script:RegisterEvent(EVENT_KEY,Key)
 				script:UnregisterEvent(onLoad)
@@ -118,6 +112,18 @@ function Main(tick)
 
 	local me = entityList:GetMyHero()
 	local medalion = medalion_find()
+	local asd = abyssal_find()
+	if asd ~= false then
+		info[2].visible = true
+		if auto_abyssal then
+			info[3].visible = true
+		else
+			info[3].visible = false
+		end
+	else
+		info[2].visible = false
+		info[3].visible = false
+	end
 	if not me then return end
 
 	-- Get hero abilities --
