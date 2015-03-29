@@ -198,12 +198,13 @@ function FindTarget()
 					and not v:DoesHaveModifier("modifier_windrunner_windrun") 
 					and (me:IsMagicDmgImmune() or not v:DoesHaveModifier("modifier_item_blade_mail_reflect")) then
 						closest = v
-					elseif distance < GetDistance2D(closest,me) and not v:IsMagicDmgImmune()  
-					and not v:DoesHaveModifier("modifier_dazzle_shallow_grave")  
-					and not v:DoesHaveModifier("modifier_windrunner_windrun") 
-					and (me:IsMagicDmgImmune() or not v:DoesHaveModifier("modifier_item_blade_mail_reflect")) then
-						closest = v
-						print(closest)
+					elseif closest~=nil then
+						if distance < GetDistance2D(closest,me) and not v:IsMagicDmgImmune()  
+						and not v:DoesHaveModifier("modifier_dazzle_shallow_grave")  
+						and not v:DoesHaveModifier("modifier_windrunner_windrun") 
+						and (me:IsMagicDmgImmune() or not v:DoesHaveModifier("modifier_item_blade_mail_reflect")) then
+							closest = v
+						end
 					end
 				end
 					end) then
