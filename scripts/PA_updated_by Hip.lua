@@ -149,7 +149,8 @@ function Main(tick)
 			and not target:IsPhysDmgImmune() 
 			and not target:IsMagicDmgImmune()
 			and not target:DoesHaveModifier("modifier_dazzle_shallow_grave") 
-			and not target:DoesHaveModifier("modifier_windrunner_windrun") then
+			and not target:DoesHaveModifier("modifier_windrunner_windrun") 
+			and (me:IsMagicDmgImmune() or not target:DoesHaveModifier("modifier_item_blade_mail_reflect")) then
 				inCombo = true
 				if auto_abyssal and target.health/target.maxHealth < hp_to_use_abyssal then
 					use_abyssal()
@@ -194,19 +195,24 @@ function FindTarget()
 				if distance <= range then 
 					if closest == nil and not v:IsPhysDmgImmune() and not v:IsMagicDmgImmune() 
 					and not v:DoesHaveModifier("modifier_dazzle_shallow_grave")
-					and not v:DoesHaveModifier("modifier_windrunner_windrun") then
+					and not v:DoesHaveModifier("modifier_windrunner_windrun") 
+					and (me:IsMagicDmgImmune() or not v:DoesHaveModifier("modifier_item_blade_mail_reflect")) then
 						closest = v
 					elseif distance < GetDistance2D(closest,me) and not v:IsMagicDmgImmune()  
 					and not v:DoesHaveModifier("modifier_dazzle_shallow_grave")  
-					and not v:DoesHaveModifier("modifier_windrunner_windrun") then
+					and not v:DoesHaveModifier("modifier_windrunner_windrun") 
+					and (me:IsMagicDmgImmune() or not v:DoesHaveModifier("modifier_item_blade_mail_reflect")) then
 						closest = v
+						print(closest)
 					end
 				end
 					end) then
 			end
 		end
 	end
-	return closest
+	if closest == nil then return false
+	else return closest
+	end
 end
 
 function onClose()
