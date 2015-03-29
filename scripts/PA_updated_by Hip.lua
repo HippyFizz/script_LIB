@@ -9,7 +9,7 @@ Description:
 Phantom Assassin Ultimate Combo
 - Stifling Dagger
 - Phantom Strike
-- Abbysal Blade (use '[' and ']' to add and munis HP TO AUTO ABYSSAL})
+- Abbysal Blade (use '[' and ']' to add and minus HP TO AUTO ABYSSAL})
 Features
 - Auto use medalion
 - Avoid target BKB, Ghost, Dazzle, Windrunner etc
@@ -24,8 +24,8 @@ require("libs.Utils")
 
 --CONFIGURATION
 config = ScriptConfig.new()
-config:SetParameter("AvoidDazzleGrave", true,config.TYPE_BOOL)
-config:SetParameter("AvoidBKB",true,config.TYPE_BOOL)
+--[[config:SetParameter("AvoidDazzleGrave", true,config.TYPE_BOOL)
+config:SetParameter("AvoidBKB",true,config.TYPE_BOOL)]]
 config:SetParameter("ComboKey", "R", config.TYPE_HOTKEY)
 config:SetParameter("AbyssBtn", "E", config.TYPE_HOTKEY)
 config:SetParameter("TargetLeastHP", false,config.TYPE_BOOL)
@@ -71,7 +71,11 @@ function onLoad()
 				registered = true
 				info[1].visible = true
 				info[2].visible = true
-				info[3].visible = true
+				if auto_abyssal then
+					info[3].visible = true
+				else
+					info[3].visible = false
+				end
 				script:RegisterEvent(EVENT_TICK,Main)
 				script:RegisterEvent(EVENT_KEY,Key)
 				script:UnregisterEvent(onLoad)
