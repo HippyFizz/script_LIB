@@ -1,9 +1,9 @@
---<<Edited PA script by HippyFizz | Version: 2.0>>
+--<<Edited PA script by HippyFizz | Version: 2.1>>
 --[[
 ----------------------------------------------
 | Original Phantom Assassin Script was made by edwynxero |
 ----------------------------------------------
-================= Version 2.0 ================
+================= Version 2.1 ================
 Description:
 ------------
 Phantom Assassin Ultimate Combo
@@ -15,7 +15,13 @@ Features
 - Avoid target BKB, Ghost, Dazzle, Windrunner etc
 - Excludes Illusions
 - One Key Combo Initiator (keep key pressed to continue combo)
+
+18.04.2015 update:
+- Added under mouse cursor target, use config to enable/disable it
+- Press StopCombo button (you may change in config) to reset target and cancel combo-ing
 ]]--
+
+
 
 --LIBRARIES
 require("libs.ScriptConfig")
@@ -29,10 +35,12 @@ config:SetParameter("AvoidBKB",true,config.TYPE_BOOL)]]
 config:SetParameter("ComboKey", "R", config.TYPE_HOTKEY)
 config:SetParameter("AbyssBtn", "E", config.TYPE_HOTKEY)
 config:SetParameter("TargetLeastHP", false,config.TYPE_BOOL)
+config:SetParameter("TargetUnderMouse", false, config.TYPE_BOOL)
 config:SetParameter("AutoAbyssal",false,config.TYPE_BOOL)
 config:SetParameter("HpToAbyssal", 0.50)
 config:SetParameter("PlusHpToAbyss", 219, config.TYPE_HOTKEY)
 config:SetParameter("MinusHpToAbyss",221, config.TYPE_HOTKEY)
+config:SetParameter("StopCombo", "S", config.TYPE_HOTKEY)
 config:Load()
 
 --SETTINGS
@@ -42,9 +50,11 @@ local hp_to_use_abyssal = config.HpToAbyssal
 local plus_hp = config.PlusHpToAbyss
 local minus_hp = config.MinusHpToAbyss
 local getLeastHP = config.TargetLeastHP
+local getUnderMouse = config.TargetUnderMouse
 local avoid_bkb = config.AvoidBKB
 local avoid_grave = config.AvoidDazzleGrave
 local auto_abyssal = config.AutoAbyssal
+local stop_btn = config.StopCombo
 local registered= false
 local range = 1000
 
@@ -105,6 +115,11 @@ function Key(msg,code)
 			info[3].text = "Auto Abyssal when target has "..tostring(user_value).."% HP"
 		end
 	end
+	
+	if IsKeyDown(stop_btn) then
+		target = nil
+		inCombo = false
+	end
 end
 
 function Main(tick)
@@ -134,6 +149,8 @@ function Main(tick)
 		if not inCombo then 
 			if getLeastHP then
 				target = targetFind:GetLowestEHP(range,"phys")
+			elseif getUnderMouse then
+				target = targetFind:GetClosestToMouse(100)
 			else
 				target = FindTarget()
 			end
